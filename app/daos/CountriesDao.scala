@@ -15,6 +15,10 @@ import scala.concurrent.{ExecutionContext, Future}
 
 /**
   * Created by caeus on 24/06/17.
+  *
+  * Daos are for serializing, and deserializing and communicating with
+  * databases, for me. A lot of code of that in here, mainly because of
+  * the need of populating it with CSV files
   */
 @Singleton
 class CountriesDao @Inject()(query: CountriesQuery,

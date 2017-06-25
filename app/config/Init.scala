@@ -26,24 +26,26 @@ class Init @Inject()(countriesDao: CountriesDao,
                      countriesQuery: CountriesQuery,
                      airportsQuery: AirportsQuery,
                      runwaysQuery: RunwaysQuery)(implicit executionContext: ExecutionContext) {
+  //I had all this code to populate the database mainly
+  // Also to define the ddl with the help of slick
+  //import sql.drivers.ExtendedPGProfile.api._
 
-  import sql.drivers.ExtendedPGProfile.api._
+  //private val ddl = countriesQuery.schema ++ airportsQuery.schema ++ runwaysQuery.schema
 
-  private val ddl = countriesQuery.schema ++ airportsQuery.schema ++ runwaysQuery.schema
-  println(ddl.createStatements.mkString(";\n") + ";")
-  println("# --- !Downs")
-  println(ddl.dropStatements.mkString(";\n") + ";")
+  //println(ddl.createStatements.mkString(";\n") + ";")
+  //println("# --- !Downs")
+  //println(ddl.dropStatements.mkString(";\n") + ";")
 
-  private val countriesInit = countriesDao.init
+  //private val countriesInit = countriesDao.init
 
-  private val airportsInit = countriesInit
-    .flatMap(_ => airportsDao.init)
-  private val runwaysInit = airportsInit
-    .flatMap(_ => runwaysDao.init)
-
-  countriesInit.onComplete(println)
-
-  airportsInit.onComplete(println)
-
-  runwaysInit.onComplete(println)
+  //  private val airportsInit = countriesInit
+  //    .flatMap(_ => airportsDao.init)
+  //  private val runwaysInit = airportsInit
+  //    .flatMap(_ => runwaysDao.init)
+  //
+  //  countriesInit.onComplete(println)
+  //
+  //  airportsInit.onComplete(println)
+  //
+  //  runwaysInit.onComplete(println)
 }

@@ -5,6 +5,7 @@ import slick.jdbc.PostgresProfile
 
 /**
   * Created by caeus on 24/06/17.
+  * This was only necessary to have array support, it shouldn't have been needed otherwise
   */
 trait ExtendedPGProfile extends PostgresProfile
   with PgSearchSupport

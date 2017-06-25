@@ -8,6 +8,10 @@ import scala.concurrent.Future
 
 /**
   * Created by caeus on 24/06/17.
+  *
+  * I like having one "engine" or "service" per resource
+  * It should contain business logic...
+  * There wasn't much business logic as you can see
   */
 @Singleton
 class CountriesEngine @Inject()(dao: CountriesDao) {

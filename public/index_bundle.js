@@ -12815,10 +12815,8 @@ var _constants2 = _interopRequireDefault(_constants);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var axios = _axios2.default.create({
-    baseURL: 'http://localhost:9000'
-
-});
+//I had to change the base url for some testing
+var axios = _axios2.default;
 
 var errorHandler = function errorHandler(dispatch) {
     return function (e) {

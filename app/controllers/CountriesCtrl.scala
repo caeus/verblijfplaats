@@ -10,24 +10,19 @@ import play.api.mvc._
 import scala.concurrent.{ExecutionContext, Future}
 
 /**
-  * This controller creates an `Action` to handle HTTP requests to the
-  * application's home page.
+  *
+  * So I try to make everything restful. It was kind of difficult as
+  * Aggregations per se are each a different resource
+  * Same with runways, airports and countries.
+  * At the end I had to be quite flexible and violate rest principles
+  * for the sake of the test
   */
 @Singleton
 class CountriesCtrl @Inject()(cc: ControllerComponents,
                               countriesEngine: CountriesEngine
                              )(implicit executionContext: ExecutionContext) extends AbstractController(cc) {
 
-  /**
-    * Create an Action to render an HTML page.
-    *
-    * The configuration in the `routes` file means that this method
-    * will be called when the application receives a `GET` request with
-    * a path of `/`.
-    */
-  def index() = Action { implicit request: Request[AnyContent] =>
-    Ok(views.html.index())
-  }
+
 
   def query(q: String) = Action.async {
     countriesEngine.query(q).map {

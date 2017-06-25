@@ -1,10 +1,8 @@
 import axios1 from "axios";
 import constants from "../constants";
 
-const axios = axios1.create({
-    baseURL: 'http://localhost:9000'
-
-})
+//I had to change the base url for some testing
+const axios = axios1
 
 const errorHandler = (dispatch) => {
     return (e) => dispatch({
