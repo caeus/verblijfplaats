@@ -40,9 +40,9 @@ const domCountry = (countries) => {
                         .map((airport) => {
                             return <div>
                                 <h3>{airport.name}</h3>
-                                |{airport.runways.map((runway)=>(
-                                    [<span>{runway.le.ident}</span>,"|"]
-                                ))}
+                                |{airport.runways.map((runway) => (
+                                [<span>{runway.le.ident}</span>, "|"]
+                            ))}
                             </div>
                         })}
                 </ul>
@@ -52,14 +52,19 @@ const domCountry = (countries) => {
 }
 
 const component = ({makeQuery, countryByCode, countries}) => {
-    let query;
+    let inputEl;
 
     return (
         <div>
-            <form onSubmit={(e) => makeQuery(query)}>
+            <form onSubmit={(e) => {
+                makeQuery(inputEl.value)
+                e.preventDefault()
+            }}>
                 <input onChange={(e) => {
                     query = e.target.value
-                }}/>
+                }} defaultValue={countries.query}
+                       ref={(el)=> inputEl=el}
+                />
                 <button>Search!</button>
             </form>
             {domCountry(countries)}

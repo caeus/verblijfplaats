@@ -29405,7 +29405,7 @@ var component = function component(_ref) {
         countryByCode = _ref.countryByCode,
         countries = _ref.countries;
 
-    var query = void 0;
+    var inputEl = void 0;
 
     return _react2.default.createElement(
         "div",
@@ -29413,11 +29413,16 @@ var component = function component(_ref) {
         _react2.default.createElement(
             "form",
             { onSubmit: function onSubmit(e) {
-                    return makeQuery(query);
+                    makeQuery(inputEl.value);
+                    e.preventDefault();
                 } },
             _react2.default.createElement("input", { onChange: function onChange(e) {
                     query = e.target.value;
-                } }),
+                }, defaultValue: countries.query,
+                ref: function ref(el) {
+                    return inputEl = el;
+                }
+            }),
             _react2.default.createElement(
                 "button",
                 null,
