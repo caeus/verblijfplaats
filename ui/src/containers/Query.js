@@ -71,6 +71,8 @@ const component = ({makeQuery, countryByCode, countries}) => {
             {domCountries(countryByCode, countries)}
         </div>)
 };
+
+
 export default connect(
     mapStateToProps,
     mapDispatchToProps

@@ -25,3 +25,6 @@ object ErrorInfo {
 object ManagedException {
   def unapply(me: ManagedException): Option[ErrorInfo] = Some(ErrorInfo(me.httpStatus, me.message, me.details))
 }
+
+
+

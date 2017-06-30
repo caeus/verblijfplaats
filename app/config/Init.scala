@@ -36,10 +36,10 @@ class Init @Inject()(countriesDao: CountriesDao,
   //println("# --- !Downs")
   //println(ddl.dropStatements.mkString(";\n") + ";")
 
-  //private val countriesInit = countriesDao.init
+  private val countriesInit = countriesDao.init
 
-  //  private val airportsInit = countriesInit
-  //    .flatMap(_ => airportsDao.init)
+    private val airportsInit = countriesInit
+      .flatMap(_ => airportsDao.init)
   //  private val runwaysInit = airportsInit
   //    .flatMap(_ => runwaysDao.init)
   //

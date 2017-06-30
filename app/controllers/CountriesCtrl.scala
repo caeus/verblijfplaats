@@ -25,6 +25,7 @@ class CountriesCtrl @Inject()(cc: ControllerComponents,
 
 
   def query(q: String) = Action.async {
+
     countriesEngine.query(q).map {
       descriptors =>
         Ok(Json.toJson(descriptors))

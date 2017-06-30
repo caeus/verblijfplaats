@@ -84,5 +84,9 @@ const runwayModes = function () {
 
 
 export default {
-    makeQuery, countryByCode, airportCountTops, runwayHistograms, runwayModes
+    makeQuery,
+    countryByCode,
+    airportCountTops,
+    runwayHistograms,
+    runwayModes
 }

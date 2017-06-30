@@ -29,7 +29,6 @@ class ReportsEngine @Inject()(dao: CountriesDao)(implicit executionContext: Exec
 
   def runwayHistograms: Future[Seq[CountryRunwayHistogram]] = {
     dao.runwayHistograms
-
   }
 
 }

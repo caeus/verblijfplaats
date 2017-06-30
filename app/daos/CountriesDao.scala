@@ -28,23 +28,24 @@ class CountriesDao @Inject()(query: CountriesQuery,
                              environment: Environment)
                             (implicit executionContext: ExecutionContext) extends HasDatabaseConfigProvider[JdbcProfile] {
   def runwayModes: Future[Seq[RunwayMode]] = {
-    val action=runwaysQuery.filter(_.leIdent.isDefined)
+    val action = runwaysQuery.filter(_.leIdent.isDefined)
       .groupBy(_.leIdent)
-      .map{
-        case (leIdent,group)=>
-          leIdent->group.length
+      .map {
+        case (leIdent, group) =>
+          leIdent -> group.length
       }
-      .sortBy{
+      .sortBy {
         //I prefer destructuring than ._1 ._2 ._ bla bla bla access, because it's way more readable
-        case (_,count)=>count.desc
+        case (_, count) => count.desc
       }
       .take(10).result
     db.run(action)
-      .map{
-        data=> data.map{
-          case (Some(ident),count)=>RunwayMode(ident,count)
-          case _ =>throw new IllegalStateException("Database was probably edited during this query")
-        }
+      .map {
+        data =>
+          data.map {
+            case (Some(ident), count) => RunwayMode(ident, count)
+            case _ => throw new IllegalStateException("Database was probably edited during this query")
+          }
       }
 
   }
@@ -54,23 +55,23 @@ class CountriesDao @Inject()(query: CountriesQuery,
       case (country, results) =>
         country -> results.length
     }
-    val action = counts.join(query).on {
-      case ((countryCode, _), country) => countryCode === country.code
+    val action = query.joinLeft(counts).on {
+      case (country, (countryCode, _)) => countryCode === country.code
     }.sortBy {
-      case ((_, count), _) if asc => count.asc
-      case ((_, count), _) => count.desc
+      case (_, right) if asc => right.map(_._2).getOrElse(0).asc
+      case (_, right) => right.map(_._2).getOrElse(0).desc
     }.take(limit).result
 
     db.run(action)
       .map {
         results =>
           results.map {
-            case ((_, count), row) =>
+            case (row, right) =>
               CountryAirportCount(
                 id = row.id: Long,
                 code = row.code: String,
                 name = row.name: String,
-                airportCount = count: Int
+                airportCount = right.map(_._2).getOrElse(0): Int
               )
           }
       }
@@ -159,22 +160,22 @@ class CountriesDao @Inject()(query: CountriesQuery,
     val text = q.toLowerCase()
     val action = query.filter {
       schema =>
-        schema.name.toLowerCase.like(s"%$text%") || schema.code.toLowerCase.like(s"%$text%")
-    }.result.map {
-      rows =>
-        rows.map {
-          row =>
-            import row._
-            CountryDescriptor(id: Long,
-              code: String,
-              name: String,
-              continent: String,
-              wikipediaLink: String,
-              keywords: List[String])
-        }
-
-    }
+        schema.code.toLowerCase.like(s"%$text%") || schema.name.toLowerCase.like(s"%$text%")
+    }.result
     db.run(action)
+      .map {
+        rows =>
+          rows.map {
+            row =>
+              import row._
+              CountryDescriptor(id: Long,
+                code: String,
+                name: String,
+                continent: String,
+                wikipediaLink: String,
+                keywords: List[String])
+          }
+      }
   }
 
 
